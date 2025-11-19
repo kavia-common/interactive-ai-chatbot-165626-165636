@@ -1,26 +1,191 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #000000;
-  --color-secondary: #FFFFFF;
-  --color-accent: #3B82F6;
-  --color-background: #FFFFFF;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  --color-primary: #2563EB;
+  --color-secondary: #F59E0B;
+  --color-success: #F59E0B;
+  --color-error: #EF4444;
+  --color-gradient-from: #3B82F6;
+  --color-gradient-to: #f9fafb;
+  --color-background: #f9fafb;
+  --color-surface: #ffffff;
+  --color-text: #111827;
+  --surface-radius: 1.25rem;
+  --surface-shadow: 0 6px 32px 0 rgba(16, 30, 54, 0.07), 0 1.5px 4px 0 rgba(31, 41, 55, 0.05);
+  --transition-fast: 0.18s cubic-bezier(0.37,0,0.63,1);
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  background-color: var(--color-background);
-  color: var(--color-primary);
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--color-gradient-from) 0%, var(--color-gradient-to) 100%);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
-body {
-  font-family: system-ui, -apple-system, sans-serif;
+#root, main {
+  min-height: 100vh;
+  display: flex;
+  place-items: center;
+  background: transparent;
+}
+
+.ocean-chat-container {
+  background: var(--color-surface);
+  max-width: 420px;
+  width: 100%;
+  margin: 3rem auto 1rem auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--surface-radius);
+  box-shadow: var(--surface-shadow);
+  overflow: hidden;
+}
+
+.ocean-chat-header {
+  background: linear-gradient(90deg, var(--color-primary)7% 0%, var(--color-gradient-to) 95%);
+  color: var(--color-surface);
+  padding: 1.1rem 2rem .8rem 2rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: .01em;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ocean-message-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1.6rem 1rem 1rem 1rem;
+  background: transparent;
+  scroll-behavior: smooth;
+}
+
+.ocean-message {
+  margin-bottom: 1.3rem;
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  font-size: 1.015rem;
+}
+
+.ocean-message.assistant {
+  flex-direction: row;
+}
+
+.ocean-message.user {
+  flex-direction: row-reverse;
+}
+
+.ocean-message-bubble {
+  padding: .7rem 1.02rem;
+  border-radius: 1.2em;
+  background: #f4f8ff;
+  color: var(--color-text);
+  max-width: 82%;
+  word-break: break-word;
+  box-shadow: 0 .75px 4px rgba(70, 130, 180, .04);
+  opacity: 1;
+  transition: opacity var(--transition-fast);
+}
+
+.ocean-message-bubble.assistant {
+  background: linear-gradient(95deg, var(--color-gradient-from) 7%, #eef6fe 95%);
+  color: var(--color-text);
+}
+.ocean-message-bubble.user {
+  background: linear-gradient(100deg, var(--color-secondary) 0%, #fff7e6 90%);
+  color: #ad6900;
+}
+
+.ocean-chat-input-bar {
+  padding: .95rem 1rem;
+  background: #f3f8fd;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  min-height: 64px;
+  position: relative;
+}
+
+.ocean-chat-input-bar input[type="text"] {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  background: #eef6fe;
+  border-radius: .85em;
+  min-height: 2.3rem;
+  padding: .55rem 1.1rem;
+  font-size: 1.06rem;
+  color: var(--color-text);
+  transition: box-shadow var(--transition-fast);
+  box-shadow: 0 .5px 2.2px rgba(37, 99, 235, .08);
+}
+
+.ocean-chat-input-bar input[type="text"]:focus {
+  box-shadow: 0 1.5px 6px rgba(37, 99, 235, .17);
+}
+
+.ocean-send-btn {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  border-radius: 1em;
+  padding: .62rem 1.13rem;
+  margin-left: .25rem;
+  min-width: 72px;
+  cursor: pointer;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 .75px 4px rgba(37, 99, 235, .07);
+}
+
+.ocean-send-btn:disabled, .ocean-send-btn[aria-disabled="true"] {
+  opacity: 0.7;
+  background: #a9cbf6;
+  cursor: not-allowed;
+}
+
+.ocean-message-error {
+  color: var(--color-error);
+  padding-left: 8px;
+  font-size: .99rem;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 650px) {
+  .ocean-chat-container {
+    max-width: 100vw;
+    min-height: 90dvh;
+    border-radius: 0;
+    margin: 0;
+  }
+  .ocean-chat-header {
+    padding: 1rem 1rem;
+    border-radius: 0;
+  }
+  .ocean-chat-input-bar {
+    padding: .7rem .7rem;
+  }
+  .ocean-message-bubble {
+    max-width: 96vw;
+    min-width: 36%;
+    font-size: 1em;
+    padding: .68em 1em;
+  }
+  .ocean-message-list {
+    padding: .7rem .5rem .7rem .5rem;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e5eefd;
+}
+::-webkit-scrollbar-thumb {
+  background: #b4cffb;
+  border-radius: 8px;
 }

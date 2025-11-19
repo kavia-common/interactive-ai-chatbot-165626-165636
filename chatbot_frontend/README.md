@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ocean Professional AI Chatbot Frontend
 
-## Getting Started
+This is a [Next.js](https://nextjs.org) web app for interacting with the Ocean Professional AI chatbot.
 
-First, run the development server:
+## Features
+
+- Modern, responsive chat UI themed per "Ocean Professional" (blues/amber, gradients, rounded, shadows)
+- Interactive chat window, scrollable messages, fixed input—all accessible and ARIA-friendly
+- Detects env vars for API/WS endpoints, gracefully falls back to a realistic local mock if unset
+- Streaming/real-time handling if NEXT_PUBLIC_WS_URL is set, or normal REST (or mock)
+- Minimal test coverage with easy-to-run browser tests
+
+## Environment Variables
+
+- `NEXT_PUBLIC_API_BASE`: (optional) REST API endpoint (e.g. http://localhost:5000/api). If unset/empty, a built-in mock is used.
+- `NEXT_PUBLIC_WS_URL`: (optional) WebSocket endpoint for real-time/streaming chat. If set, will connect.
+- No backend required for local testing/demo.
+
+## Theming & Style
+
+- Uses an Ocean Professional palette: primary #2563EB, secondary/success #F59E0B, error #EF4444, gradient from-blue-500/10 to-gray-50, background #f9fafb, surface #fff, text #111827.
+- Modern minimalist with subtle gradients, rounded corners, smooth transitions (see `src/app/globals.css`).
+
+## How API/WS Are Detected
+
+- **REST mode**: If `NEXT_PUBLIC_API_BASE` env is provided, sends POSTs to `{API_BASE}/chat`; else uses local mock simulating AI responses.
+- **WebSocket mode**: If `NEXT_PUBLIC_WS_URL` is provided (and browser supports), client connects for streaming-like UI. This is optional.
+
+## Running and Testing
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Open browser at http://localhost:3000
+
+# Run unit tests
+npm install --save-dev @testing-library/react @testing-library/jest-dom jest
+npm test
 ```
+- See `src/types.d.ts` for TypeScript types.
+- Update your `NEXT_PUBLIC_API_BASE` and `NEXT_PUBLIC_WS_URL` as needed.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Folder Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/components/`: ChatWindow, MessageList, MessageInput
+- `src/utils/`: API client (with fallback mock), WebSocket client
+- `__tests__/`: Example test
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
