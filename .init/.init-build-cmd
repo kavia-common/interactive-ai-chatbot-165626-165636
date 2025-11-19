@@ -1,0 +1,4 @@
+{
+    "command": "npm install && npm run lint && npm run build",
+    "working_directory": "/home/kavia/workspace/code-generation/interactive-ai-chatbot-165626-165636/chatbot_frontend"
+}
